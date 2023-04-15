@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderDBController;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/check-connection', function () {
+    try {
+        DB::connection()->getRawPdo();
+        echo "Connected successfully to the database!";
+    } catch (\Exception $e) {
+        die("Could not connect to the database. Error: " . $e);
+    }
+});
+
+Route::resource('order', OrderDBController::class);
