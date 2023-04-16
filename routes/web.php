@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::resource('/', OrderDBController::class);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/check-connection', function () {
     try {
@@ -27,5 +29,3 @@ Route::get('/check-connection', function () {
         die("Could not connect to the database. Error: " . $e);
     }
 });
-
-Route::resource('order', OrderDBController::class);
