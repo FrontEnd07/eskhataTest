@@ -2,83 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use \App\Models\orderDB;
+use \App\Models\orderitem;
+use Illuminate\Http\Request;
+use App\Http\Requests\OrderRequest;
+use Illuminate\Support\Facades\Validator;
 
 class OrderDBController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $orders = OrderDB::all();
         return view('order', ['orders' => $orders]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('create', ['orders' => "test"]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        //
+        // Данные валидны, сохраняем в базу данных
+        $item = new orderitem();
+        $item->orderId = $request->OrderIdForm;
+        $item->name = $request->NameForm;
+        $item->quantity = $request->QuantityForm;
+        $item->unit = $request->UnitForm;
+        $item->save();
+
+        return redirect()->route('create')->with('success', 'Заказ успешно сохранен.');;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        // 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

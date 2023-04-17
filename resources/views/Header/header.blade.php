@@ -19,6 +19,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        .full-page {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        nav {
+            background: #fff3e263;
+        }
+
         .intro {
             width: 100%;
             background-position: center top;
@@ -55,13 +69,13 @@
         <div class="container">
             <div class="d-flex justify-content-between col-12">
                 <div class="d-flex">
-                    <a class="navbar-brand" href="#">
+                    <a href="{{ url('/') }}" class="navbar-brand">
                         <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
                         Bootstrap
                     </a>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-warning">Добавить заказ</button>
+                    <a href="{{ url('create') }}" class="btn btn-warning">Добавить заказ</a>
                 </div>
             </div>
         </div>
