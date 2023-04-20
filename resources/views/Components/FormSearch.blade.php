@@ -1,14 +1,16 @@
 <script>
+    var today = new Date();
+    var monthAgo = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+    var formattedDate = (monthAgo.getMonth() + 1) + '/' + monthAgo.getDate() + '/' + monthAgo.getFullYear();
+
+    console.log(monthAgo)
     $(document).ready(function() {
-        $("#startdate").datepicker({
-            todayBtn: 1,
-            autoclose: true,
-        }).on('changeDate', function(selected) {
+        $("#startdate").datepicker("setDate", formattedDate).on('changeDate', function(selected) {
             var minDate = new Date(selected.date.valueOf());
             $('#enddate').datepicker('setStartDate', minDate);
         });
 
-        $("#enddate").datepicker()
+        $("#enddate").datepicker("setDate", today)
             .on('changeDate', function(selected) {
                 var maxDate = new Date(selected.date.valueOf());
                 $('#startdate').datepicker('setEndDate', maxDate);
@@ -23,7 +25,7 @@
 </script>
 <div class="row text-center">
     <div class="input-group date col" id="startdate" data-provide="setStartDate">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="startdate" value="{{ old('startdate') }}">
         <div class="input-group-addon">
             <span class="input-group-text bg-light d-block">
                 <i class="fa fa-calendar"></i>
@@ -31,7 +33,7 @@
         </div>
     </div>
     <div class="input-group date col" id="enddate" data-provide="setEndDate">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="enddate" value="{{ old('enddate') }}">
         <div class="input-group-addon">
             <span class="input-group-text bg-light d-block">
                 <i class="fa fa-calendar"></i>
@@ -43,11 +45,9 @@
     <div class="d-flex justify-content-between">
         <div class="col-md-12 col-xl-4">
             <select id="multiple-select-optgroup-field" class="form-select col" id="multiple-select-field" data-placeholder="поиск поставщика" multiple>
-                <option>Christmas Island</option>
-                <option>South Sudan</option>
-                <option>Jamaica</option>
-                <option>Kenya</option>
-                <option>French Guiana</option>
+                @foreach ($provider as $item)
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
             </select>
         </div>
         <div>

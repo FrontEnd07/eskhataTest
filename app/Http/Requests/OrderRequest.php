@@ -14,10 +14,9 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            "OrderIdForm" => "required|integer|max:2147483647",
-            'NameForm' => 'required|integer|max:2147483647',
-            'QuantityForm' => 'required|numeric',
-            'UnitForm' => 'required|integer|max:2147483647',
+            'NameForm.*' => 'required|integer|max:2147483647',
+            'QuantityForm.*' => 'required|numeric',
+            'UnitForm.*' => 'required|integer|max:2147483647'
         ];
     }
     /**
@@ -28,10 +27,9 @@ class OrderRequest extends FormRequest
     public function messages()
     {
         return [
-            'OrderIdForm.required' => 'OrderId обязательно для заполнения',
-            'NameForm.required' => 'Name обязательно для заполнения',
-            'QuantityForm.required' => 'Quantity обязательно для заполнения',
-            'UnitForm.required' => 'Unit с таким обязательно для заполнения',
+            'NameForm.*.required' => 'Name обязательно для заполнения',
+            'QuantityForm.*.required' => 'Quantity обязательно для заполнения',
+            'UnitForm.*.required' => 'Unit с таким обязательно для заполнения',
         ];
     }
 }
