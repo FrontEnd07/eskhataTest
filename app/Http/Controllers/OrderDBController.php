@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use \App\Models\orderDB;
 use \App\Models\provider;
 use \App\Models\orderitem;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\filterseach;
 use Illuminate\Support\Facades\Validator;
-
-use function GuzzleHttp\Promise\all;
 
 class OrderDBController extends Controller
 {
@@ -50,9 +48,34 @@ class OrderDBController extends Controller
         return response()->json(["status" => 200]);
     }
 
-    public function show($id)
+    public function show(Request $request)
     {
-        // 
+        $validator = Validator::make($request->all(), [
+            'provider' => 'required',
+            'startdate' => 'required|date|date_format:m/d/Y',
+            'enddate' => 'required|date|date_format:m/d/Y',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $orderDB = new orderDB();
+        $startdate = Carbon::createFromFormat('m/d/Y', $request->startdate)->format('Y-m-d');
+        $enddate = Carbon::createFromFormat('m/d/Y', $request->enddate)->format('Y-m-d');
+
+        $data = $orderDB
+            ->whereIn('orderdb.providerId', $request->provider)
+            ->whereDate('orderdb.created_at', '>=', $startdate)
+            ->select('orderdb.id as orderdb_id', 'provider.id as provider_id', "number", "date", "name")
+            ->whereDate('orderdb.created_at', '<=', $enddate)
+            ->join('provider', 'orderdb.providerId', '=', 'provider.id')->get();
+
+        // dd($data);
+
+        return view('show', ['data' => $data]);
     }
 
 

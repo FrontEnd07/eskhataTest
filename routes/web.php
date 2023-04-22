@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 
 Route::resource('/', OrderDBController::class);
+Route::get('/show', [OrderDBController::class, 'show']);
 // Route::get('/', function () {
 //     return view('welcome');
 // });
