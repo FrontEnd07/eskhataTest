@@ -72,7 +72,7 @@
                     </a>
                 </div>
                 <div>
-                    <a href="{{ url('create') }}" class="btn btn-warning">Добавить заказ</a>
+                    <a href="{{ route('order.create') }}" class="btn btn-warning">Добавить заказ</a>
                 </div>
             </div>
         </div>

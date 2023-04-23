@@ -26,7 +26,7 @@
         });
     });
 </script>
-<form class="form_content" method="GET" action="/show">
+<form class="form_content" method="GET" action="{{ route('order.show') }}">
     @csrf
     <div class="row text-center">
         <div class="input-group date col" id="startdate" data-provide="setStartDate">

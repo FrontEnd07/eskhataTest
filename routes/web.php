@@ -16,11 +16,17 @@ use Illuminate\Support\Facades\DB;
 */
 
 
-Route::resource('/', OrderDBController::class);
-Route::get('/show', [OrderDBController::class, 'show']);
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/order', [OrderDBController::class, 'index'])->name('order.index');
+Route::get('/order/create', [OrderDBController::class, 'create'])->name('order.create');
+Route::post('/order', [OrderDBController::class, 'store'])->name('order.store');
+Route::get('/order', [OrderDBController::class, 'show'])->name('order.show');
+Route::get('/order/{order}/edit', [OrderDBController::class, 'edit'])->name('order.edit');
+Route::put('/order/{order}', [OrderDBController::class, 'update'])->name('order.update');
+Route::get('/order/{order}', [OrderDBController::class, 'destroy'])->name('order.destroy');
+
+// Route::get('/show', [OrderDBController::class, 'show']);
+// Route::get('/destroy/{id}', [OrderDBController::class, 'destroy']);
+Route::get('/', [OrderDBController::class, 'index']);
 
 Route::get('/check-connection', function () {
     try {

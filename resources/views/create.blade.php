@@ -1,9 +1,9 @@
+@include('Header.header')
 <style>
     .form_content {
         margin-top: 100px;
     }
 </style>
-@include('Header.header')
 <div class="h-100">
     <div class="container h-100">
         <form class="form_content">
@@ -88,12 +88,12 @@
             e.preventDefault();
             $.ajax({
                 type: 'POST',
-                url: `{{ route('store') }}`,
+                url: `{{ route('order.store') }}`,
                 data: $('.form_content').serialize(),
                 success: function(response) {
                     $('.fields').append('<div style="margin-top: 10px" class="alert alert-success">Заказ успешно сохранен.</div>');
                     setTimeout(() => {
-                        window.location.replace('/create')
+                        window.location.replace('/order/create')
                     }, 2000);
                 },
                 error: function(xhr, status, error) {

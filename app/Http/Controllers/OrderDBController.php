@@ -81,7 +81,10 @@ class OrderDBController extends Controller
 
     public function edit($id)
     {
-        //
+        $orderitem = new orderitem();
+        $data = $orderitem->where("orderId", $id)->get();
+        // dd($data);
+        return view('showOrder', ['data' => $data]);
     }
     public function update(Request $request, $id)
     {
@@ -90,6 +93,12 @@ class OrderDBController extends Controller
 
     public function destroy($id)
     {
-        //
+        $orderDB = new orderDB();
+        $orderitem = new orderitem();
+        $orderId = $orderDB->findOrFail($id)->id;
+        $orderDB->find($id)->delete();
+        $orderitem->where('orderId', $orderId)->delete();
+
+        return redirect("/");
     }
 }
