@@ -88,7 +88,35 @@ class OrderDBController extends Controller
     }
     public function update(Request $request, $id)
     {
-        //
+        $orderDB = new orderDB();
+        $orderitem = new orderitem();
+        $provider = provider::all();
+        if ($request->method() == 'GET') {
+            $item = $orderitem->where("orderId", $id)->get();
+            $order = $orderDB->where('id', $id)->get();
+            return view('update', ["order" => $order, "item" => $item, "provider" => $provider]);
+        } elseif ($request->method() == 'POST') {
+            $validator = Validator::make($request->all(), [
+                'NameForm.*' => 'required|integer|max:2147483647',
+                'QuantityForm.*' => 'required|numeric',
+                'UnitForm.*' => 'required|integer|max:2147483647'
+            ]);
+            if ($validator->fails()) {
+                return redirect()->back()->with('error', 'Ошибка при обновлении заказа.');
+            }
+            foreach ($request->NameForm as $key => $val) {
+                $data[] = [
+                    "id" => $key,
+                    "name" => $request->NameForm[$key],
+                    "quantity" => $request->QuantityForm[$key],
+                    "unit" => $request->UnitForm[$key],
+                    "orderId" => $id,
+                ];
+            }
+            $orderitem->upsert($data, ['id'], ['name', 'quantity', 'unit', 'orderId']);
+            $orderDB->where('id', $id)->update(["providerId" => $request->provider]);
+            return redirect()->route('order.update', ['order' => $id])->with('success', 'Заказ успешно обновлен.');
+        }
     }
 
     public function destroy($id)

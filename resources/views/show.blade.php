@@ -29,6 +29,9 @@
                         <a href="{{ route('order.edit', ['order' => $val->orderdb_id]) }}" class="btn btn-primary">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </a>
+                        <a href="{{ route('order.update', ['order' => $val->orderdb_id]) }}" class="btn btn-warning">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
                     </td>
                 </tr>
                 @endforeach

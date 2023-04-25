@@ -21,7 +21,8 @@ Route::get('/order/create', [OrderDBController::class, 'create'])->name('order.c
 Route::post('/order', [OrderDBController::class, 'store'])->name('order.store');
 Route::get('/order', [OrderDBController::class, 'show'])->name('order.show');
 Route::get('/order/{order}/edit', [OrderDBController::class, 'edit'])->name('order.edit');
-Route::put('/order/{order}', [OrderDBController::class, 'update'])->name('order.update');
+Route::get('/order/{order}/update', [OrderDBController::class, 'update'])->name('order.update');
+Route::post('/order/{order}/update', [OrderDBController::class, 'update'])->name('order.update.post');
 Route::get('/order/{order}', [OrderDBController::class, 'destroy'])->name('order.destroy');
 
 // Route::get('/show', [OrderDBController::class, 'show']);
